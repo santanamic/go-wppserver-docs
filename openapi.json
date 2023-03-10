@@ -1,0 +1,555 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "go-wppserver",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/v1"
+    }
+  ],
+  "security": [
+    {
+      "oauth2": []
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "password": {
+            "tokenUrl": "http://localhost:3000/v1/auth",
+            "scopes": {}
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/user": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Register User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "name": "{{$randomUserName}}",
+                  "email": "{{$randomEmail}}",
+                  "Password": "{{$randomEmail}}"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get User",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Id": "{{root_id}}",
+                  "Name": "root",
+                  "Email": "root@example.com",
+                  "Status": "enabled",
+                  "Type": "admin"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Delete User",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/password": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update Password User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Id": "{{root_id}}",
+                  "OldPassword": "{{root_password}}",
+                  "NewPassword": "123"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/status": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Update Status User",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Id": "{{root_id}}",
+                  "Status": "disabled"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get Users",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/users/findusers": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Find Users",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/user/key": {
+      "post": {
+        "tags": [
+          "API Key"
+        ],
+        "summary": "Create User Key",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "UserId": "{{root_id}}",
+                  "Description": "V api key"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "API Key"
+        ],
+        "summary": "Get User Keys",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "API Key"
+        ],
+        "summary": "Delete User Key",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/device/login": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Login Device",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/device/logout": {
+      "get": {
+        "tags": [
+          "Device"
+        ],
+        "summary": "Logout Device",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/session/status": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Status Session",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/session/connect": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Connect Session",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/session/disconnect": {
+      "post": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Disconnect Session",
+        "requestBody": {
+          "content": {}
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/chat/send/text": {
+      "post": {
+        "tags": [
+          "Send"
+        ],
+        "summary": "Send Image",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Phone": "+5511932486442",
+                  "Body": "{{$randomLoremText}}"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/chat/send/document": {
+      "post": {
+        "tags": [
+          "Send"
+        ],
+        "summary": "Send Document",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Phone": "+5511932486442",
+                  "FileName": "My file.zip",
+                  "Document": "data:application/zip;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/phone/contacts": {
+      "get": {
+        "tags": [
+          "Phone"
+        ],
+        "summary": "Get Contacts",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    },
+    "/phone/scraping": {
+      "post": {
+        "tags": [
+          "Phone"
+        ],
+        "summary": "Scraping Phones",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "example": {
+                  "Phone": [
+                    "5491155553934",
+                    "5491155553935"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      }
+    }
+  }
+}
