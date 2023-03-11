@@ -1,123 +1,76 @@
 {
-  "openapi": "3.0.0",
   "info": {
     "title": "go-wppserver",
     "version": "1.0.0"
   },
-  "servers": [
-    {
-      "url": "http://localhost:3000/v1"
-    }
-  ],
   "security": [
     {
       "oauth2": []
     }
   ],
-  "components": {
-    "securitySchemes": {
-      "oauth2": {
-        "type": "oauth2",
-        "flows": {
-          "password": {
-            "tokenUrl": "http://localhost:3000/v1/auth",
-            "scopes": {}
-          }
-        }
-      }
-    }
-  },
   "paths": {
     "/auth": {
       "post": {
         "tags": [
           "Auth"
         ],
+        "description" : "A auth request is used to exchange authorization credentials for an access token.
+Requests to the auth endpoint are authenticated using client credentials (API Keys)  or through username and password authentication.",
         "summary": "Get Token",
         "parameters": [
           {
             "name": "grant_type",
+            "description": "The grant_type is a way to specify which authorization flow the client wants to use to obtain an access token. The two supported types are: password and client_credentials.",
             "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "password"
+            "type": "string",
+            "x-example": "password"
           },
           {
             "name": "username",
+            "description": "Used when the client wants to obtain an access token using the user's credentials (grant_type is password).",
             "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "admin"
+            "type": "string",
+            "x-example": "admin"
           },
           {
             "name": "password",
+            "description": "Used when the client wants to obtain an access token using the user's credentials (grant_type is password),",
             "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "root"
+            "type": "string",
+            "x-example": "root"
           },
           {
             "name": "client_id",
+            "description": "Used when the client wants to obtain an access token using API keys (grant_type is client_credentials).",
             "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "cd_xxxx-xxxx-xxxx"
+            "type": "string",
+            "x-example": "cd_ce952554bf5a11edafa10242ac120002"
           },
           {
             "name": "client_secret",
+            "description": "Used when the client wants to obtain an access token using API keys (grant_type is client_credentials).",
             "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "example": "cs_xxxx-xxxx-xxxx"
+            "type": "string",
+            "x-example": "cs_2242ec18a6c94f02bb90b4abbb6a3df5"
           }
         ],
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "example": {
-                    "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsImFwaWtleWlkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIiwidXNlcmlkIjoiOGI1M2QwZDctYTM4Yy0xMWVkLWI5ZWUtNTBiN2MzMDA4NDMzIiwiU2NvcGUiOiJhZG1pbjoqIiwiZXhwIjoxNjc4Mzg1NjAwfQ.-k7Pm8E9R2hMPjFfjeun_7ZdKsLaT7RcCvzXlMDWR28"
-                  }
-                }
+            "schema": {
+              "type": "object",
+              "example": {
+                "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsImFwaWtleWlkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIiwidXNlcmlkIjoiOGI1M2QwZDctYTM4Yy0xMWVkLWI5ZWUtNTBiN2MzMDA4NDMzIiwiU2NvcGUiOiJhZG1pbjoqIiwiZXhwIjoxNjc4Mzg1NjAwfQ.-k7Pm8E9R2hMPjFfjeun_7ZdKsLaT7RcCvzXlMDWR28"
               }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
-      }
-    },
-    "/auth/refresh": {
-      "get": {
-        "tags": [
-          "Auth"
-        ],
-        "summary": "Refresh Token",
-        "security": [],
-        "parameters": [
-          {
-            "name": "Authorization",
-            "in": "header",
-            "schema": {
-              "type": "string"
-            },
-            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijg4MDUwNDgyLTY0NzQtMTFlZC04NWE1LTUwYjdjMzAwODQzMyIsImV4cCI6MTY3MzIxMDM5NH0.6IBvKWQttUXegRFtVhjpV33FgqoJT7AMyc-nCwmrWT8"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
+        },
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/user": {
@@ -126,34 +79,42 @@
           "User"
         ],
         "summary": "Register User",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "name": "{{$randomUserName}}",
-                  "email": "{{$randomEmail}}",
-                  "Password": "{{$randomEmail}}"
-                }
+        "description": "The endpoint allows users to register. This endpoint typically receives user registration information such as name, email address, and password.",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "name": "Raúl Méndez",
+                "email": "rmendez1985@gmail.com",
+                "password": "05081985"
               }
             }
           }
-        },
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       },
       "get": {
         "tags": [
           "User"
         ],
         "summary": "Get User",
+        "description": "The endpoint allows users to obtain information about their accounts. This endpoint normally does not receive parameters.",
         "security": [
           {
             "oauth2": []
@@ -162,33 +123,35 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {
-              "application/json": {}
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                "name": "Raúl Méndez",
+                "email": "rmendez1985@gmail.com",
+                "status": "enabled",
+                "type": "user"
+              }
             }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       },
       "put": {
         "tags": [
           "User"
         ],
         "summary": "Update User",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Id": "{{root_id}}",
-                  "Name": "root",
-                  "Email": "root@example.com",
-                  "Status": "enabled",
-                  "Type": "admin"
-                }
-              }
-            }
-          }
-        },
+        "description": "The endpoint allows users to update information in their accounts based on the information provided in the request. This endpoint usually receives Name and Email parameters for updating. If the request is made by an administrator, the Type and Status parameters can also be received in the request, and in these case, the user ID parameter must be sent in the body of the request.",
         "security": [
           {
             "oauth2": []
@@ -197,30 +160,88 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {
-              "application/json": {}
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                "name": "Raúl Méndez",
+                "email": "rmendez1985@gmail.com",
+                "type": "admin"
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                "name": "Raúl Méndez",
+                "email": "rmendez1985@gmail.com",
+                "type": "admin"
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       },
       "delete": {
         "tags": [
           "User"
         ],
         "summary": "Delete User",
+        "description":"The endpoint is responsible for deleting a specific user from the system. When a DELETE request is sent to this endpoint with the user ID to be deleted, the system verifies that the user exists and then removes all information associated with the user.",
         "security": [
           {
             "oauth2": []
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
+              }
             }
           }
-        }
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/user/password": {
@@ -229,33 +250,46 @@
           "User"
         ],
         "summary": "Update Password User",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Id": "{{root_id}}",
-                  "OldPassword": "{{root_password}}",
-                  "NewPassword": "123"
-                }
-              }
-            }
-          }
-        },
+        "description":"The endpoint allows users to update their access passwords. By making a request to that endpoint with the correct credentials, the user can submit a new password that will replace the old password.",
         "security": [
           {
             "oauth2": []
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                "oldpassword": "05081985",
+                "newpassword": "rmendez1985"
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/user/status": {
@@ -264,32 +298,45 @@
           "User"
         ],
         "summary": "Update Status User",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Id": "{{root_id}}",
-                  "Status": "disabled"
-                }
-              }
-            }
-          }
-        },
+        "description":"The endpoint allows admin-type user to update the status of other users. By making a request to that endpoint with the correct credentials, the admin user can update the target user status to enabled or disabled.",
         "security": [
           {
             "oauth2": []
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad request"
+          },
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                "status": "disabled"
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/users": {
@@ -297,7 +344,8 @@
         "tags": [
           "User"
         ],
-        "summary": "Get Users",
+        "summary": "Get All Users",
+        "description":"The endpoint allows administrators to obtain a complete list of all registered users in the system. When making a request to this endpoint, the application will receive a response containing the details of all users, including information such as name, email address, encrypted password and other relevant information.",
         "security": [
           {
             "oauth2": []
@@ -306,11 +354,30 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {
-              "application/json": {}
+              "schema": {
+              "type": "object",
+              "example": [
+                    {
+                    "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                    "name": "Raúl Méndez",
+                    "email": "rmendez1985@gmail.com",
+                    "status": "disabled",
+                    "type": "admin"
+                  }
+                ]
             }
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/users/findusers": {
@@ -319,6 +386,7 @@
           "User"
         ],
         "summary": "Find Users",
+        "description":"The endpoint allows administrators to perform searches for specific users based on a keyword. Upon making a request to that endpoint with the correct search parameters the app will receive a response containing a list of users.",
         "security": [
           {
             "oauth2": []
@@ -327,83 +395,38 @@
         "responses": {
           "200": {
             "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      }
-    },
-    "/user/key": {
-      "post": {
-        "tags": [
-          "API Key"
-        ],
-        "summary": "Create User Key",
-        "requestBody": {
-          "content": {
-            "application/json": {
               "schema": {
-                "type": "object",
-                "example": {
-                  "UserId": "{{root_id}}",
-                  "Description": "V api key"
-                }
-              }
+              "type": "object",
+              "example": [
+                    {
+                    "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
+                    "name": "Raúl Méndez",
+                    "email": "rmendez1985@gmail.com",
+                    "status": "disabled",
+                    "type": "admin"
+                  }
+                ]
             }
+          },
+          "500": {
+            "description": "Internal server error"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
-        "security": [
+        "parameters": [
           {
-            "oauth2": []
+            "name": "keyword",
+            "description": "The field allows you to enter a relevant keyword that will be used to filter users.",
+            "in": "query",
+            "type": "string",
+            "x-example": "Méndez"
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      },
-      "get": {
-        "tags": [
-          "API Key"
-        ],
-        "summary": "Get User Keys",
-        "security": [
-          {
-            "oauth2": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-          "API Key"
-        ],
-        "summary": "Delete User Key",
-        "security": [
-          {
-            "oauth2": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
-          }
-        }
+          ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/device/login": {
@@ -419,12 +442,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/device/logout": {
@@ -440,12 +464,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/session/status": {
@@ -461,12 +486,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/session/connect": {
@@ -475,9 +501,6 @@
           "Session"
         ],
         "summary": "Connect Session",
-        "requestBody": {
-          "content": {}
-        },
         "security": [
           {
             "oauth2": []
@@ -485,12 +508,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/session/disconnect": {
@@ -499,9 +523,6 @@
           "Session"
         ],
         "summary": "Disconnect Session",
-        "requestBody": {
-          "content": {}
-        },
         "security": [
           {
             "oauth2": []
@@ -509,12 +530,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/chat/send/text": {
@@ -523,19 +545,6 @@
           "Send"
         ],
         "summary": "Send Image",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Phone": "+5511932486442",
-                  "Body": "{{$randomLoremText}}"
-                }
-              }
-            }
-          }
-        },
         "security": [
           {
             "oauth2": []
@@ -543,12 +552,28 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+            "description": "Successful response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "Phone": "+5511932486442",
+                "Body": "{{$randomLoremText}}"
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/chat/send/document": {
@@ -557,20 +582,6 @@
           "Send"
         ],
         "summary": "Send Document",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Phone": "+5511932486442",
-                  "FileName": "My file.zip",
-                  "Document": "data:application/zip;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
-                }
-              }
-            }
-          }
-        },
         "security": [
           {
             "oauth2": []
@@ -578,12 +589,29 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+            "description": "Successful response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "Phone": "+5511932486442",
+                "FileName": "My file.zip",
+                "Document": "data:application/zip;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/phone/contacts": {
@@ -599,12 +627,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
-            }
+            "description": "Successful response"
           }
-        }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
       }
     },
     "/phone/scraping": {
@@ -613,21 +642,6 @@
           "Phone"
         ],
         "summary": "Scraping Phones",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "example": {
-                  "Phone": [
-                    "5491155553934",
-                    "5491155553935"
-                  ]
-                }
-              }
-            }
-          }
-        },
         "security": [
           {
             "oauth2": []
@@ -635,13 +649,46 @@
         ],
         "responses": {
           "200": {
-            "description": "Successful response",
-            "content": {
-              "application/json": {}
+            "description": "Successful response"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "example": {
+                "Phone": [
+                  "5491155553934",
+                  "5491155553935"
+                ]
+              }
             }
           }
-        }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
       }
     }
-  }
+  },
+  "swagger": "2.0",
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/v1",
+  "securityDefinitions": {
+    "oauth2": {
+      "type": "oauth2",
+      "flow": "password",
+      "tokenUrl": "http://localhost:3000/v1/auth",
+      "scopes": {}
+    }
+  },
+  "x-components": {}
 }
