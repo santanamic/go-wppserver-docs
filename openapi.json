@@ -14,8 +14,7 @@
         "tags": [
           "Auth"
         ],
-        "description" : "A auth request is used to exchange authorization credentials for an access token.
-Requests to the auth endpoint are authenticated using client credentials (API Keys)  or through username and password authentication.",
+        "description": "A auth request is used to exchange authorization credentials for an access token. Requests to the auth endpoint are authenticated using client credentials (API Keys)  or through username and password authentication.",
         "summary": "Get Token",
         "parameters": [
           {
@@ -58,10 +57,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "200": {
             "description": "Successful response",
             "schema": {
-              "type": "object",
-              "example": {
-                "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsImFwaWtleWlkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIiwidXNlcmlkIjoiOGI1M2QwZDctYTM4Yy0xMWVkLWI5ZWUtNTBiN2MzMDA4NDMzIiwiU2NvcGUiOiJhZG1pbjoqIiwiZXhwIjoxNjc4Mzg1NjAwfQ.-k7Pm8E9R2hMPjFfjeun_7ZdKsLaT7RcCvzXlMDWR28"
-              }
+              "$ref": "#/definitions/AccessTokenModel"
             }
           },
           "401": {
@@ -82,7 +78,10 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         "description": "The endpoint allows users to register. This endpoint typically receives user registration information such as name, email address, and password.",
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/UserModel"
+            }
           },
           "400": {
             "description": "Bad request"
@@ -93,12 +92,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "name": "Raúl Méndez",
-                "email": "rmendez1985@gmail.com",
-                "password": "05081985"
-              }
+              "$ref": "#/definitions/RegisterUserModel"
             }
           }
         ],
@@ -124,21 +118,14 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "200": {
             "description": "Successful response",
             "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                "name": "Raúl Méndez",
-                "email": "rmendez1985@gmail.com",
-                "status": "enabled",
-                "type": "user"
-              }
+              "$ref": "#/definitions/UserModel"
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "400": {
             "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "parameters": [],
@@ -161,37 +148,25 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "200": {
             "description": "Successful response",
             "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                "name": "Raúl Méndez",
-                "email": "rmendez1985@gmail.com",
-                "type": "admin"
-              }
+              "$ref": "#/definitions/UserModel"
             }
-          },
-          "500": {
-            "description": "Internal server error"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "400": {
             "description": "Bad request"
           },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         },
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                "name": "Raúl Méndez",
-                "email": "rmendez1985@gmail.com",
-                "type": "admin"
-              }
+              "$ref": "#/definitions/UpdateUserModel"
             }
           }
         ],
@@ -207,7 +182,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "User"
         ],
         "summary": "Delete User",
-        "description":"The endpoint is responsible for deleting a specific user from the system. When a DELETE request is sent to this endpoint with the user ID to be deleted, the system verifies that the user exists and then removes all information associated with the user.",
+        "description": "The endpoint is responsible for deleting a specific user from the system. When a DELETE request is sent to this endpoint with the user ID to be deleted, the system verifies that the user exists and then removes all information associated with the user.",
         "security": [
           {
             "oauth2": []
@@ -217,25 +192,22 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "204": {
             "description": "Successful response. No content"
           },
-          "500": {
-            "description": "Internal server error"
+          "400": {
+            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized"
           },
-          "400": {
-            "description": "Bad request"
-          },
+          "500": {
+            "description": "Internal server error"
+          }
         },
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
-              }
+              "$ref": "#/definitions/DeleteUserModel"
             }
           }
         ],
@@ -250,7 +222,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "User"
         ],
         "summary": "Update Password User",
-        "description":"The endpoint allows users to update their access passwords. By making a request to that endpoint with the correct credentials, the user can submit a new password that will replace the old password.",
+        "description": "The endpoint allows users to update their access passwords. By making a request to that endpoint with the correct credentials, the user can submit a new password that will replace the old password.",
         "security": [
           {
             "oauth2": []
@@ -260,74 +232,22 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "204": {
             "description": "Successful response. No content"
           },
-          "500": {
-            "description": "Internal server error"
+          "400": {
+            "description": "Bad request"
           },
           "401": {
             "description": "Unauthorized"
           },
-          "400": {
-            "description": "Bad request"
-          },
+          "500": {
+            "description": "Internal server error"
+          }
         },
         "parameters": [
           {
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                "oldpassword": "05081985",
-                "newpassword": "rmendez1985"
-              }
-            }
-          }
-        ],
-        "consumes": [
-          "application/json"
-        ],
-        "produces": [
-          "application/json"
-        ]
-      }
-    },
-    "/user/status": {
-      "put": {
-        "tags": [
-          "User"
-        ],
-        "summary": "Update Status User",
-        "description":"The endpoint allows admin-type user to update the status of other users. By making a request to that endpoint with the correct credentials, the admin user can update the target user status to enabled or disabled.",
-        "security": [
-          {
-            "oauth2": []
-          }
-        ],
-        "responses": {
-          "204": {
-            "description": "Successful response. No content"
-          },
-          "500": {
-            "description": "Internal server error"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "400": {
-            "description": "Bad request"
-          },
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "example": {
-                "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                "status": "disabled"
-              }
+              "$ref": "#/definitions/UpdatePasswordModel"
             }
           }
         ],
@@ -345,7 +265,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "User"
         ],
         "summary": "Get All Users",
-        "description":"The endpoint allows administrators to obtain a complete list of all registered users in the system. When making a request to this endpoint, the application will receive a response containing the details of all users, including information such as name, email address, encrypted password and other relevant information.",
+        "description": "The endpoint allows administrators to obtain a complete list of all registered users in the system. When making a request to this endpoint, the application will receive a response containing the details of all users, including information such as name, email address, encrypted password and other relevant information.",
         "security": [
           {
             "oauth2": []
@@ -354,24 +274,18 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         "responses": {
           "200": {
             "description": "Successful response",
-              "schema": {
-              "type": "object",
-              "example": [
-                    {
-                    "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                    "name": "Raúl Méndez",
-                    "email": "rmendez1985@gmail.com",
-                    "status": "disabled",
-                    "type": "admin"
-                  }
-                ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserModel"
+              }
             }
-          },
-          "500": {
-            "description": "Internal server error"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -386,7 +300,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "User"
         ],
         "summary": "Find Users",
-        "description":"The endpoint allows administrators to perform searches for specific users based on a keyword. Upon making a request to that endpoint with the correct search parameters the app will receive a response containing a list of users.",
+        "description": "The endpoint allows administrators to perform searches for specific users based on a keyword. Upon making a request to that endpoint with the correct search parameters the app will receive a response containing a list of users.",
         "security": [
           {
             "oauth2": []
@@ -395,24 +309,18 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         "responses": {
           "200": {
             "description": "Successful response",
-              "schema": {
-              "type": "object",
-              "example": [
-                    {
-                    "id": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c",
-                    "name": "Raúl Méndez",
-                    "email": "rmendez1985@gmail.com",
-                    "status": "disabled",
-                    "type": "admin"
-                  }
-                ]
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/UserModel"
+              }
             }
-          },
-          "500": {
-            "description": "Internal server error"
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -423,7 +331,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
             "type": "string",
             "x-example": "Méndez"
           }
-          ],
+        ],
         "produces": [
           "application/json"
         ]
@@ -435,6 +343,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Device"
         ],
         "summary": "Login Device",
+        "description": "When making a request to this endpoint, the system generates a unique QR code for the device in question. The user can then scan the QR code with their mobile device's camera, which will allow the system to authenticate the user's account and grant access to API operations on behalf of the number associated with the device.",
         "security": [
           {
             "oauth2": []
@@ -442,7 +351,16 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/LoginDeviceModel"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -457,36 +375,21 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Device"
         ],
         "summary": "Logout Device",
+        "description": "The endpoint is used to allow a user to log out of a device associated with their API user account.",
         "security": [
           {
             "oauth2": []
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response"
-          }
-        },
-        "parameters": [],
-        "produces": [
-          "application/json"
-        ]
-      }
-    },
-    "/session/status": {
-      "get": {
-        "tags": [
-          "Session"
-        ],
-        "summary": "Status Session",
-        "security": [
-          {
-            "oauth2": []
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful response"
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -501,14 +404,21 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Session"
         ],
         "summary": "Connect Session",
+        "description": "The endpoint is used to establish a session connection between a specific device and the application server. When making a request to this endpoint, the system verifies that the device is registered with the system and has the necessary permissions to connect to the session. Once the session connection has been successfully established, the system can send and receive data on behalf of the connected device.",
         "security": [
           {
             "oauth2": []
           }
         ],
         "responses": {
-          "200": {
-            "description": "Successful response"
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -523,6 +433,36 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Session"
         ],
         "summary": "Disconnect Session",
+        "description": "The endpoint is used to terminate a previously established session connection between a specific device and the application server. When making a request to this endpoint, the system verifies that the session connection exists and then securely and efficiently terminates the connection. This allows the system to free up resources and memory used to manage the session, improving overall system efficiency. As long as the device remains logged into the application, it is possible to reconnect whenever necessary.",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful response. No content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/session/status": {
+      "get": {
+        "tags": [
+          "Session"
+        ],
+        "summary": "Status Session",
+        "description": "The endpoint is used to obtain information about session status and the existence of devices logged into the API account.",
         "security": [
           {
             "oauth2": []
@@ -530,7 +470,19 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/StatusSessionModel"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -544,7 +496,8 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         "tags": [
           "Send"
         ],
-        "summary": "Send Image",
+        "summary": "Send Text",
+        "description": "The endpoint is used to send texts to a specific device number via the application server.",
         "security": [
           {
             "oauth2": []
@@ -552,7 +505,19 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/MessageResponseModel"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -560,11 +525,53 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "Phone": "+5511932486442",
-                "Body": "{{$randomLoremText}}"
-              }
+              "$ref": "#/definitions/SendTextModel"
+            }
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/chat/send/image": {
+      "post": {
+        "tags": [
+          "Send"
+        ],
+        "summary": "Send Image",
+        "description": "The endpoint is used to send images to a specific device number via the application server. The contents of the file must be base64 encoded.",
+        "security": [
+          {
+            "oauth2": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/MessageResponseModel"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/SendImageModel"
             }
           }
         ],
@@ -582,6 +589,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Send"
         ],
         "summary": "Send Document",
+        "description": "The endpoint is used to send a document to a specific device number via the application server. The contents of the file must be base64 encoded.",
         "security": [
           {
             "oauth2": []
@@ -589,7 +597,19 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/MessageResponseModel"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -597,12 +617,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "Phone": "+5511932486442",
-                "FileName": "My file.zip",
-                "Document": "data:application/zip;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
-              }
+              "$ref": "#/definitions/SendDocumentModel"
             }
           }
         ],
@@ -620,6 +635,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Phone"
         ],
         "summary": "Get Contacts",
+        "description": "The endpoint is used to retrieve saved contact information from a specific device. When making a request to this endpoint, the system retrieves contact information stored on the device, including name, phone number and other relevant information.",
         "security": [
           {
             "oauth2": []
@@ -627,7 +643,19 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "$ref": "#/definitions/PhoneInfoModel"
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [],
@@ -642,6 +670,7 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
           "Phone"
         ],
         "summary": "Scraping Phones",
+        "description": "The endpoint is used to extract contact information from one or more phone numbers. When making a request to this endpoint, the system uses data scraping techniques to extract public information from users.",
         "security": [
           {
             "oauth2": []
@@ -649,7 +678,22 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
         ],
         "responses": {
           "200": {
-            "description": "Successful response"
+            "description": "Successful response",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PhoneInfoModel"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal server error"
           }
         },
         "parameters": [
@@ -657,13 +701,14 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
             "name": "body",
             "in": "body",
             "schema": {
-              "type": "object",
-              "example": {
-                "Phone": [
-                  "5491155553934",
-                  "5491155553935"
-                ]
-              }
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "example": [
+                "5491155553934",
+                "5491155553935"
+              ]
             }
           }
         ],
@@ -690,5 +735,282 @@ Requests to the auth endpoint are authenticated using client credentials (API Ke
       "scopes": {}
     }
   },
-  "x-components": {}
+  "definitions": {
+    "AccessTokenModel": {
+      "type": "object",
+      "properties": {
+        "access_token": {
+          "type": "string",
+          "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMCIsImFwaWtleWlkIjoiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwIiwidXNlcmlkIjoiOGI1M2QwZDctYTM4Yy0xMWVkLWI5ZWUtNTBiN2MzMDA4NDMzIiwiU2NvcGUiOiJhZG1pbjoqIiwiZXhwIjoxNjc4Mzg1NjAwfQ.-k7Pm8E9R2hMPjFfjeun_7ZdKsLaT7RcCvzXlMDWR28"
+        }
+      }
+    },
+    "UserModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
+        },
+        "name": {
+          "type": "string",
+          "example": "Raúl Méndez"
+        },
+        "email": {
+          "type": "string",
+          "example": "rmendez1985@gmail.com"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "agent"
+          ],
+          "example": "admin"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "example": "enabled"
+        }
+      }
+    },
+    "RegisterUserModel": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "Raúl Méndez"
+        },
+        "email": {
+          "type": "string",
+          "example": "rmendez1985@gmail.com"
+        },
+        "password": {
+          "type": "string",
+          "example": "05081985"
+        }
+      },
+      "required": [
+        "name",
+        "email",
+        "password"
+      ]
+    },
+    "UpdateUserModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
+        },
+        "name": {
+          "type": "string",
+          "example": "Raúl Méndez"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "example": "rmendez1985@gmail.com"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "admin",
+            "agent"
+          ],
+          "example": "admin"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "enabled",
+            "disabled"
+          ],
+          "example": "enabled"
+        }
+      },
+      "required": [
+        "name",
+        "email"
+      ]
+    },
+    "DeleteUserModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
+        }
+      },
+      "required": [
+        "id"
+      ]
+    },
+    "UpdatePasswordModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "format": "uuid",
+          "example": "58fd4474-8bb0-41a0-ad5f-5b492fbdfa2c"
+        },
+        "oldpassword": {
+          "type": "string",
+          "example": "05081985"
+        },
+        "newpassword": {
+          "type": "string",
+          "example": "rmendez1985"
+        }
+      },
+      "required": [
+        "oldpassword",
+        "newpassword"
+      ]
+    },
+    "LoginDeviceModel": {
+      "type": "object",
+      "properties": {
+        "base64qrcode": {
+          "type": "string",
+          "example": "data:image/png;base64,iVBORw0KGg...[base64-encoded data]"
+        },
+        "expiration": {
+          "type": "string",
+          "format": "date-time",
+          "example": "2006-01-02T15:04:05-0700"
+        }
+      }
+    },
+    "StatusSessionModel": {
+      "type": "object",
+      "properties": {
+        "islogged": {
+          "type": "boolean",
+          "example": true
+        },
+        "isconnected": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "MessageResponseModel": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "example": "f5a92da61d94481ea0e991b8868d716e"
+        },
+        "details": {
+          "type": "string",
+          "example": "Sent"
+        },
+        "timestamp": {
+          "type": "string",
+          "example": "1678652549"
+        }
+      },
+      "required": [
+        "phone",
+        "filename",
+        "document"
+      ]
+    },
+    "SendTextModel": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "+5511932486442"
+        },
+        "body": {
+          "type": "string",
+          "example": "Hello my dear friend...."
+        }
+      },
+      "required": [
+        "phone",
+        "body"
+      ]
+    },
+    "SendImageModel": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "+5511932486442"
+        },
+        "image": {
+          "type": "string",
+          "example": "data:image/png;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
+        }
+      },
+      "required": [
+        "phone",
+        "image"
+      ]
+    },
+    "SendDocumentModel": {
+      "type": "object",
+      "properties": {
+        "phone": {
+          "type": "string",
+          "example": "+5511932486442"
+        },
+        "filename": {
+          "type": "string",
+          "example": "My file.zip"
+        },
+        "document": {
+          "type": "string",
+          "example": "data:application/zip;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
+        }
+      },
+      "required": [
+        "phone",
+        "filename",
+        "document"
+      ]
+    },
+    "PhoneInfoModel": {
+      "type": "object",
+      "properties": {
+        "jid": {
+          "type": "string",
+          "example": "5511932486442.0:22@s.whatsapp.net"
+        },
+        "phone": {
+          "type": "string",
+          "example": "+5511932486442"
+        },
+        "onwhatsapp": {
+          "type": "boolean",
+          "example": true
+        },
+        "iscontact": {
+          "type": "boolean",
+          "example": true
+        },
+        "pessoalname": {
+          "type": "string",
+          "example": "Raúl Méndez"
+        },
+        "businessname": {
+          "type": "string",
+          "example": "Raúl Méndez Technology S.A"
+        },
+        "pictureurl": {
+          "type": "string",
+          "example": "data:image/png;base64,UEsDBBQAAAAIAEcLMladeZbNGgAAABgAAAAIAAAAZG93bmxvYWTLyM9JVCgsTeUqSczhSs7PzedKLS5JLOYCAFBLAQIfABQAAAAIAEcLMladeZbNGgAAABgAAAAIACQAAAAAAAAAIAAAAAAAAABkb3dubG9hZAoAIAAAAAAAAQAYAOkgZwD1KtkB6SBnAPUq2QGL/Iv/9CrZAVBLBQYAAAAAAQABAFoAAABAAAAAAAA="
+        }
+      }
+    }
+  }
 }
