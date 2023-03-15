@@ -1,6 +1,16 @@
 info:
   title: go-wppserver
   version: 1.0.0
+  description: 'This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.'
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: apiteam@swagger.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
 security:
   - oauth2: []
 paths:
@@ -450,8 +460,22 @@ paths:
         - application/json
 swagger: '2.0'
 host: localhost:3000
+tags:
+  - name: Auth
+    description: User authentication route
+  - name: User
+    description: User management route
+  - name: Device
+    description: Device management route
+  - name: Session
+    description: Device session management route
+  - name: Send
+    description: Data sending route
+  - name: Phone
+    description: Phone number management route
 schemes:
   - http
+  - https
 basePath: /v1
 securityDefinitions:
   oauth2:
