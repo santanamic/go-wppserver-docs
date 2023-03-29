@@ -33,7 +33,7 @@
             "x-example": "password"
           },
           {
-            "name": "username",
+            "name": "username", 
             "description": "Used when the client wants to obtain an access token using the user's credentials (grant_type is password).",
             "in": "query",
             "type": "string",
