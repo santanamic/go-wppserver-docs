@@ -1,7 +1,15 @@
 {
   "info": {
-    "title": "go-wppserver",
-    "version": "1.0.0"
+    "title": "YOU WPPSERVER API",
+    "version": "1.0.0",
+    "description": "WPPSERVER is an unofficial WhatsApp API server, which is a software programming platform created by third parties that allows developers to integrate WhatsApp into their existing applications or systems. This API offers a wide range of features and functionalities, including the ability to send and receive messages, images and documents, obtain user profile information and more.",
+    "contact": {
+      "email": "williansantanami@gmail.com"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about",
+    "url": "http://localhost:3000/docs/index.html"
   },
   "security": [
     {
@@ -723,8 +731,35 @@
   },
   "swagger": "2.0",
   "host": "localhost:3000",
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "User authentication route"
+    },
+    {
+      "name": "User",
+      "description": "User management route"
+    },
+    {
+      "name": "Device",
+      "description": "Device management route"
+    },
+    {
+      "name": "Session",
+      "description": "Device session management route"
+    },
+    {
+      "name": "Send",
+      "description": "Data sending route"
+    },
+    {
+      "name": "Phone",
+      "description": "Phone number management route"
+    }
+  ],
   "schemes": [
-    "http"
+    "http",
+    "https"
   ],
   "basePath": "/v1",
   "securityDefinitions": {
@@ -791,7 +826,7 @@
         },
         "password": {
           "type": "string",
-          "example": "05081985"
+          "example": 5081985
         }
       },
       "required": [
@@ -862,7 +897,7 @@
         },
         "oldpassword": {
           "type": "string",
-          "example": "05081985"
+          "example": 5081985
         },
         "newpassword": {
           "type": "string",
